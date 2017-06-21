@@ -1,0 +1,16 @@
+{
+    "id": 1,
+    "requestUrl": "/test/mock1",
+    "requestMethod": "POST",
+    "requestParamTemplate": "{\"name\":\"\"}",
+    "responseCondition": [
+        {
+            "resCondition": "/name==\"test\"",
+            "resValue": "{\"retCode\": \"201\"}"
+        },
+        {
+            "resCondition": "true",
+            "resValue": "{\"retCode\": \"200\"}"
+        }
+    ]
+}

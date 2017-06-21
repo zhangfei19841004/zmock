@@ -1,0 +1,20 @@
+{
+    "id": 3,
+    "requestUrl": "/test/mock3",
+    "requestMethod": "POST,GET",
+    "requestParamTemplate": "name=&test=",
+    "responseCondition": [
+        {
+            "resCondition": "name == 'zf'",
+            "resValue": "{\"retCode\": \"201\"}"
+        },
+        {
+            "resCondition": "test == 'hello'",
+            "resValue": "{\"retCode\": \"202\"}"
+        },
+        {
+            "resCondition": "true",
+            "resValue": "{\"retCode\": \"201\"}"
+        }
+    ]
+}

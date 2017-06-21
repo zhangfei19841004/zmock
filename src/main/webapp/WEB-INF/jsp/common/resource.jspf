@@ -1,0 +1,10 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" isELIgnored="false"%>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/zmock/resources/css/common.css" />
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/zmock/resources/js/jquery-easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/zmock/resources/js/jquery-easyui/themes/icon.css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/zmock/resources/js/jquery-easyui/jquery.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/zmock/resources/js/jquery-easyui/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/zmock/resources/js/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/zmock/resources/js/common.js"></script>
+

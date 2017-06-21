@@ -1,0 +1,109 @@
+@CHARSET "UTF-8";
+*{
+    font-size:12px;
+}
+
+body {
+    font-family:helvetica,tahoma,verdana,sans-serif;
+    padding:2px;
+    font-size:13px;
+    margin:0;
+}
+
+h2 {
+    font-size:18px;
+    color:#333;
+    font-weight:bold;
+    margin:0;
+    margin-bottom:15px;
+}
+
+.demo-info{
+    background:#FFFEE6;
+    color:#8F5700;
+    padding:12px;
+}
+
+.demo-tip{
+    width:24px;
+    height:16px;
+    float:left;
+}
+
+a:hover{ color:Red; text-decoration:underline;}
+
+.logo{
+    text-decoration: none;
+    color:#666;
+}
+.footer{
+    text-align:center;
+    color:#15428B;
+    margin:0px;
+    padding:0px;
+    line-height:23px;
+    font-weight:bold;
+}
+
+/*=====================  table ========================*/
+.tab_info {
+    FONT-SIZE: 12px;
+    /* FONT-FAMILY:"微软雅黑"; */
+    height:25px;
+    BORDER-TOP: #98a9b8 1px solid;
+    BORDER-LEFT: #98a9b8 1px solid;
+    line-height: 25px;
+    width:98%;
+    text-align:center;
+    margin: 10px;
+}
+
+.tab_title {
+    background-color:#C6E3F2;text-align:left;padding-left:10px;
+    height:20px;
+}
+.tab_info_title {
+    background-color:#F0F0F0;
+    text-align:center;
+    height:20px;
+}
+.tab_info TH{
+    FONT-SIZE: 13px;
+    COLOR: #000;
+    /* FONT-FAMILY:"微软雅黑"; */
+    text-align: center;
+    vertical-align: middle;
+    background-color:#dfe9f1;
+    height:28px;
+    line-height: 20px;
+    BORDER-BOTTOM: #98a9b8 1px solid;
+    BORDER-RIGHT: #98a9b8 1px solid;
+    font-weight:normal;
+}
+
+.tab_info TD {
+    FONT-SIZE: 12px;
+    height:25px;
+    BORDER-BOTTOM: #98a9b8 1px solid;
+    BORDER-RIGHT: #98a9b8 1px solid;
+    line-height: 25px;
+    word-break:keep-all;
+    white-space:nowrap;
+}
+
+.inquire_item {
+    text-align:right;
+    width:10%;
+    padding:3px;
+    /*background-color:#f5f9fc;*/
+}
+.inquire_form {
+    text-align:left;
+    /*width:20%;*/
+    padding:3px;
+    /*background:#f5f9fc;*/
+}
+
+/*========menu css=======*/
+.icon{ background:url(../img/tabicons.png) no-repeat;width:18px; line-height:18px; display:inline-block;}
+.icon-log{background-position: -380px -80px;}

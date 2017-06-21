@@ -1,0 +1,54 @@
+[
+    {
+        "id": 1,
+        "requestUrl": "/test/mock1",
+        "requestMethod": "POST",
+        "requestParamTemplate": "{\"name\":\"\"}",
+        "responseCondition": [
+            {
+                "resCondition": "/name==\"test\"",
+                "resValue": "{\"retCode\": \"201\"}"
+            },
+            {
+                "resCondition": "true",
+                "resValue": "{\"retCode\": \"200\"}"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "requestUrl": "/test/mock2",
+        "requestMethod": "POST",
+        "requestParamTemplate": ".*",
+        "responseCondition": [
+           	{
+                "resCondition": ".* == 'this is test'",
+                "resValue": "{\"retCode\": \"201\"}"
+            },
+            {
+                "resCondition": "true",
+                "resValue": "{\"retCode\": \"200\"}"
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "requestUrl": "/test/mock3",
+        "requestMethod": "POST,GET",
+        "requestParamTemplate": "name=&test=",
+        "responseCondition": [
+           	{
+                "resCondition": "name == 'zf'",
+                "resValue": "{\"retCode\": \"201\"}"
+            },
+            {
+                "resCondition": "test == 'hello'",
+                "resValue": "{\"retCode\": \"202\"}"
+            },
+            {
+                "resCondition": "true",
+                "resValue": "{\"retCode\": \"201\"}"
+            }
+        ]
+    }
+]
