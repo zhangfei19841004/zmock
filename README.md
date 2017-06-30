@@ -21,7 +21,7 @@ zmock介绍
  * 启动tomcat
 4.  设置
   * 打开http://ip:port/zmock/index?role=whosyourdaddy
-  ![](/uploads/photo/2017/65fb7aa1-0baf-45ab-8251-cf939d193163.png!large)
+  ![](https://testerhome.com/uploads/photo/2017/65fb7aa1-0baf-45ab-8251-cf939d193163.png!large)
   * 填写mock数据保存目录，作为一个workspace。在https://github.com/zhangfei19841004/zmock 中有一个data目录，建议将mock数据保存目录指向这个data目录，里面有已经写好的mock接口，可以作为参考。
   * 一般情况下用http://ip:port/zmock/index访问即可
 
@@ -51,22 +51,22 @@ zmock平台使用说明
 ***
 
 >  以上是一份简单的接口文档，公司不同，文档的要求不同，但我相信大家都应该能看懂这份文档，现在，我们根据这份文档来mock一个http接口出来：
-  1. 点击左上角的+号：![](/uploads/photo/2017/a33a5327-5cd6-4595-b07b-5fc74eb66800.png!large)
-  2. 确定后，在菜单中选择或输入测试DEMO，在mock请求URL中填写：![](/uploads/photo/2017/22f6c283-e3dc-47b9-932a-36abaad5cedd.png!large)
-  3. mock请求方法选择POST:![](/uploads/photo/2017/08c0c485-4c63-401a-81a0-6962f377a3a1.png!large)
-  4. 在mock请求参数模板中：![](/uploads/photo/2017/c3859752-e489-4b0b-be04-9f4816388fe0.png!large)
-  5. 在mock规则定义中点击新增：![](/uploads/photo/2017/36cb97ff-d047-4d77-8deb-b05c445d9b13.png!large)
-  6. 再增加一条规则：![](/uploads/photo/2017/a5ee19b8-ea28-4e82-ab31-139f1460e602.png!large)
-  7. 最后一条规则：![](/uploads/photo/2017/7b49cded-db16-43cc-a756-9321023373df.png!large)
+  1. 点击左上角的+号：![](https://testerhome.com/uploads/photo/2017/a33a5327-5cd6-4595-b07b-5fc74eb66800.png!large)
+  2. 确定后，在菜单中选择或输入测试DEMO，在mock请求URL中填写：![](https://testerhome.com/uploads/photo/2017/22f6c283-e3dc-47b9-932a-36abaad5cedd.png!large)
+  3. mock请求方法选择POST:![](https://testerhome.com/uploads/photo/2017/08c0c485-4c63-401a-81a0-6962f377a3a1.png!large)
+  4. 在mock请求参数模板中：![](https://testerhome.com/uploads/photo/2017/c3859752-e489-4b0b-be04-9f4816388fe0.png!large)
+  5. 在mock规则定义中点击新增：![](https://testerhome.com/uploads/photo/2017/36cb97ff-d047-4d77-8deb-b05c445d9b13.png!large)
+  6. 再增加一条规则：![](https://testerhome.com/uploads/photo/2017/a5ee19b8-ea28-4e82-ab31-139f1460e602.png!large)
+  7. 最后一条规则：![](https://testerhome.com/uploads/photo/2017/7b49cded-db16-43cc-a756-9321023373df.png!large)
   8. 保存后，mock就完成了
 
 ***
 
 >  mock完成后，我们来测试一下这个http接口：
-![](/uploads/photo/2017/2b9e84f0-4f98-4bf8-aa2b-10cce7e26c24.png!large)
-![](/uploads/photo/2017/ddebdc65-a7da-4483-8965-67d6279b4055.png!large)
-![](/uploads/photo/2017/904419a6-bbb0-452b-bdd5-be840b28cd2f.png!large)
-![](/uploads/photo/2017/81f9c94b-fea0-4834-80bd-f859b5840102.png!large)
+![](https://testerhome.com/uploads/photo/2017/2b9e84f0-4f98-4bf8-aa2b-10cce7e26c24.png!large)
+![](https://testerhome.com/uploads/photo/2017/ddebdc65-a7da-4483-8965-67d6279b4055.png!large)
+![](https://testerhome.com/uploads/photo/2017/904419a6-bbb0-452b-bdd5-be840b28cd2f.png!large)
+![](https://testerhome.com/uploads/photo/2017/81f9c94b-fea0-4834-80bd-f859b5840102.png!large)
 
 zmock的特点
 ====
