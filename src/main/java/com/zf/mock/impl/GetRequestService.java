@@ -22,6 +22,9 @@ public class GetRequestService extends AbstractRequestService{
 	@Override
 	public <T> boolean checkRequest(T requestInfo, String requestParamTemplate) {
 		Map<String, String> reqInfo = (Map<String, String>) requestInfo;
+		if(".*".equals(requestParamTemplate) && reqInfo.isEmpty()){
+			return true;
+		}
 		String[] temps = requestParamTemplate.split("\\&");
 		for (String temp : temps) {
 			String[] tempArr = temp.split("\\=");
