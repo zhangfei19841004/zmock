@@ -1,0 +1,1 @@
+{"id":1511880470100,"requestMethod":"POST","requestParamTemplate":"{\"name\":\"\"}","requestUrl":"/test/mock1","responseCondition":[{"resCondition":"/name==\"test\"","resValue":"{\"retCode\":\"201\"}"},{"resCondition":"true","resValue":"{\"retCode\":\"200\"}"}]}

@@ -42,6 +42,9 @@ public class DataProviderService {
             }
             File[] collections = file.listFiles();
             for (File collection : collections) {
+                if(collection.getName().startsWith(".")){
+                    continue;
+                }
                 if (!MOCK_COLLECTIONS.containsKey(collection.getName())){
                     MOCK_COLLECTIONS.put(collection.getName(), new ArrayList<String>());
                 }
