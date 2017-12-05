@@ -261,6 +261,19 @@ public class WebController {
     public ResponseUtil.ResponseInfo save(String collectionName, String mockName, MockInfoDao infos) {
         String[] conds = infos.getResCondition();
         String[] resValues = infos.getResValue();
+        if(conds.length==1 && resValues.length!=1){
+            String[] newResValues = new String[1];
+            StringBuffer sb = new StringBuffer();
+            for (String resValue : resValues) {
+                if(sb.length()!=0){
+                    sb.append(",");
+                }
+                sb.append(resValue);
+            }
+            newResValues[0] = sb.toString();
+            infos.setResValue(newResValues);
+        }
+        resValues = infos.getResValue();
         if(conds.length!=resValues.length || conds.length==0){
             ResponseUtil.ResponseInfo res = ResponseUtil.getFailedResponse();
             res.setRetMsg("mock规则定义出错!");
