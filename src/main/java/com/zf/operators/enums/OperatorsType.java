@@ -13,7 +13,7 @@ public enum OperatorsType {
 	LESS("<", 1),
 	GREATER_EQUAL(">=", 0),
 	LESS_EQUAL("<=", 0),
-	IN("in", 0),
+	IN("in", 1),
 	CONTAINS("contains", 0);
 	
 	private String operator;
