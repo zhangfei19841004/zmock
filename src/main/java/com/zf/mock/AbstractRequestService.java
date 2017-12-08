@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.zf.decryptandverify.DecryptAndVerifyFactory;
+import com.zf.decryptandverify.EncryptFactory;
+import com.zf.decryptandverify.IDecryptAndVerify;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSON;
@@ -31,6 +34,13 @@ public abstract class AbstractRequestService implements IRequestService{
 		if(mockInfo==null){
 			return JSON.toJSONString(ResponseUtil.getFailedResponse(ResponseUtil.ResponseConstants.NOMOCKINFO.getRetCode(), ResponseUtil.ResponseConstants.NOMOCKINFO.getRetMsg()));
 		}
+		if(DecryptAndVerifyFactory.getDecryptAndVerifySize()>0){
+			IDecryptAndVerify decryptAndVerify = DecryptAndVerifyFactory.getDecryptAndVerify("default");
+			if(!decryptAndVerify.verify(requestInfo, mockInfo)){
+				return JSON.toJSONString(ResponseUtil.getFailedResponse("302", "请求参数验证失败!"));
+			}
+			requestInfo = decryptAndVerify.decrypt(requestInfo, mockInfo);
+		}
 		if(!this.checkRequest(requestInfo, mockInfo.getRequestParamTemplate())){
 			return JSON.toJSONString(ResponseUtil.getFailedResponse("301", "请求参数不正确!"));
 		}
@@ -43,7 +53,11 @@ public abstract class AbstractRequestService implements IRequestService{
 			ConvertExpressionService<T> convert = new ConvertExpressionService<T>(requestInfo, this);
 			String result = convert.convertExpression(condition);
 			if(Boolean.valueOf(result)){
-				return mockConditionInfo.getResValue();
+				if(EncryptFactory.getEncryptSize()==0){
+					return mockConditionInfo.getResValue();
+				}else{
+					return EncryptFactory.getEncrypt("default").encrypt(mockConditionInfo.getResValue(), mockInfo);
+				}
 			}
 		}
 		return JSON.toJSONString(ResponseUtil.getFailedResponse(ResponseUtil.ResponseConstants.NORESULT.getRetCode(), ResponseUtil.ResponseConstants.NORESULT.getRetMsg()));
