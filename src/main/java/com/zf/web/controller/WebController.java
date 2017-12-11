@@ -2,6 +2,9 @@ package com.zf.web.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.zf.dao.domain.MockInfoDao;
+import com.zf.decryptandverify.DecryptAndVerifyFactory;
+import com.zf.decryptandverify.EncryptFactory;
+import com.zf.decryptandverify.IDecryptAndVerify;
 import com.zf.dto.MockRule;
 import com.zf.dto.easyui.Datagrid;
 import com.zf.service.DataProviderService;
@@ -14,6 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,6 +60,8 @@ public class WebController {
         map.put("mockName", mockName);
         MockInfoDao rules = DataProviderService.MOCK_DATAS.get(collectionName + DataProviderService.MOCK_DATAS_KEY_CONNECTOR + mockName);
         map.put("rules", rules);
+        map.put("decrypts", DecryptAndVerifyFactory.getDecryptAndVerifyKeys());
+        map.put("encrypts", EncryptFactory.getEncryptKeys());
         return "mock/content_mock";
     }
 

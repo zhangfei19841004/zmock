@@ -12,9 +12,13 @@ public class MockInfoDao {
 	
 	private String requestParamTemplate;
 
+	private String requestDecryptAndVerify;
+
 	private String[] resCondition;
 
 	private String[] resValue;
+
+	private String responseEncrypt;
 
 	private List<MockConditionInfo> responseCondition;
 
@@ -72,6 +76,22 @@ public class MockInfoDao {
 
 	public void setResValue(String[] resValue) {
 		this.resValue = resValue;
+	}
+
+	public String getRequestDecryptAndVerify() {
+		return requestDecryptAndVerify;
+	}
+
+	public void setRequestDecryptAndVerify(String requestDecryptAndVerify) {
+		this.requestDecryptAndVerify = requestDecryptAndVerify;
+	}
+
+	public String getResponseEncrypt() {
+		return responseEncrypt;
+	}
+
+	public void setResponseEncrypt(String responseEncrypt) {
+		this.responseEncrypt = responseEncrypt;
 	}
 
 	public static class MockConditionInfo {

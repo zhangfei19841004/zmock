@@ -74,6 +74,9 @@
                 if(methods){
                     $("#requestMethod").combobox('setValues', methods.split(','));
                 }
+
+                $("#requestDecryptAndVerify").combobox('setValues', '${rules.requestDecryptAndVerify}');
+                $("#responseEncrypt").combobox('setValues', '${rules.responseEncrypt}');
             });
 
             function initialInput(){
@@ -198,6 +201,28 @@
 											}
 										}]"
                                            name="requestParamTemplate" id="requestParamTemplate"/>
+								</td>
+							</tr>
+							<tr>
+								<td class="inquire_item">mock请求加密与验证方式:</td>
+								<td class="inquire_form">
+									<select class="easyui-combobox" name="requestDecryptAndVerify" style="width: 50%" id="requestDecryptAndVerify">
+										<option value="">无</option>
+										<c:forEach items="${decrypts}" var="decrypt">
+											<option value="${decrypt}">${decrypt}</option>
+										</c:forEach>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="inquire_item">mock响应加密:</td>
+								<td class="inquire_form">
+									<select class="easyui-combobox" name="responseEncrypt" style="width: 50%" id="responseEncrypt">
+										<option value="">无</option>
+										<c:forEach items="${encrypts}" var="encrypt">
+											<option value="${encrypt}">${encrypt}</option>
+										</c:forEach>
+									</select>
 								</td>
 							</tr>
 						</table>

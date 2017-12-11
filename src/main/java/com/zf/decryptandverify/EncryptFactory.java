@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 public class EncryptFactory {
@@ -29,6 +30,10 @@ public class EncryptFactory {
 
 	public static IEncrypt getEncrypt(String key){
 		return ENCRYPT.get(key);
+	}
+
+	public static Set<String> getEncryptKeys(){
+		return ENCRYPT.keySet();
 	}
 
 }

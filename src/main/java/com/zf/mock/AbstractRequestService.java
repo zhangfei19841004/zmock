@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import com.zf.decryptandverify.DecryptAndVerifyFactory;
 import com.zf.decryptandverify.EncryptFactory;
 import com.zf.decryptandverify.IDecryptAndVerify;
+import com.zf.decryptandverify.IEncrypt;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.alibaba.fastjson.JSON;
@@ -34,8 +36,11 @@ public abstract class AbstractRequestService implements IRequestService{
 		if(mockInfo==null){
 			return JSON.toJSONString(ResponseUtil.getFailedResponse(ResponseUtil.ResponseConstants.NOMOCKINFO.getRetCode(), ResponseUtil.ResponseConstants.NOMOCKINFO.getRetMsg()));
 		}
-		if(DecryptAndVerifyFactory.getDecryptAndVerifySize()>0){
-			IDecryptAndVerify decryptAndVerify = DecryptAndVerifyFactory.getDecryptAndVerify("default");
+		if(StringUtils.isNotBlank(mockInfo.getRequestDecryptAndVerify()) && DecryptAndVerifyFactory.getDecryptAndVerifySize()>0){
+			IDecryptAndVerify decryptAndVerify = DecryptAndVerifyFactory.getDecryptAndVerify(mockInfo.getRequestDecryptAndVerify());
+			if(decryptAndVerify==null){
+				return JSON.toJSONString(ResponseUtil.getFailedResponse("302", "请求参数验证文件失效!"));
+			}
 			if(!decryptAndVerify.verify(requestInfo, mockInfo)){
 				return JSON.toJSONString(ResponseUtil.getFailedResponse("302", "请求参数验证失败!"));
 			}
@@ -53,11 +58,14 @@ public abstract class AbstractRequestService implements IRequestService{
 			ConvertExpressionService<T> convert = new ConvertExpressionService<T>(requestInfo, this);
 			String result = convert.convertExpression(condition);
 			if(Boolean.valueOf(result)){
-				if(EncryptFactory.getEncryptSize()==0){
-					return mockConditionInfo.getResValue();
-				}else{
-					return EncryptFactory.getEncrypt("default").encrypt(mockConditionInfo.getResValue(), mockInfo);
+				if(StringUtils.isNotBlank(mockInfo.getResponseEncrypt()) && EncryptFactory.getEncryptSize()>0){
+					IEncrypt encrypt = EncryptFactory.getEncrypt(mockInfo.getResponseEncrypt());
+					if(encrypt==null){
+						return JSON.toJSONString(ResponseUtil.getFailedResponse("302", "响应参数加密文件失效!"));
+					}
+					encrypt.encrypt(mockConditionInfo.getResValue(), mockInfo);
 				}
+				return mockConditionInfo.getResValue();
 			}
 		}
 		return JSON.toJSONString(ResponseUtil.getFailedResponse(ResponseUtil.ResponseConstants.NORESULT.getRetCode(), ResponseUtil.ResponseConstants.NORESULT.getRetMsg()));
