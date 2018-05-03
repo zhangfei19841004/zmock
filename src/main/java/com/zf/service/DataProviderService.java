@@ -3,7 +3,6 @@ package com.zf.service;
 import com.alibaba.fastjson.JSON;
 import com.zf.dao.domain.MockInfoDao;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -19,33 +18,33 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DataProviderService {
 
     @PostConstruct
-    public void initial(){
+    public void initial() {
         this.loadMockData();
     }
 
     public static ConcurrentHashMap<String, List<String>> MOCK_COLLECTIONS = new ConcurrentHashMap<>();
 
-	public static ConcurrentHashMap<String, MockInfoDao> MOCK_DATAS = new ConcurrentHashMap<>();
+    public static ConcurrentHashMap<String, MockInfoDao> MOCK_DATAS = new ConcurrentHashMap<>();
 
-	public static String MOCK_DATAS_KEY_CONNECTOR = "+";
+    public static String MOCK_DATAS_KEY_CONNECTOR = "+";
 
-    public void loadMockData(){
-	    try{
-	        if(StringUtils.isBlank(DataSettingService.mockDataDir)){
-	            return;
+    public void loadMockData() {
+        try {
+            if (StringUtils.isBlank(DataSettingService.mockDataDir)) {
+                return;
             }
             MOCK_COLLECTIONS.clear();
             MOCK_DATAS.clear();
             File file = new File(DataSettingService.mockDataDir);
-            if(!file.exists()){
+            if (!file.exists()) {
                 file.mkdirs();
             }
             File[] collections = file.listFiles();
             for (File collection : collections) {
-                if(collection.getName().startsWith(".")){
+                if (collection.getName().startsWith(".")) {
                     continue;
                 }
-                if (!MOCK_COLLECTIONS.containsKey(collection.getName())){
+                if (!MOCK_COLLECTIONS.containsKey(collection.getName())) {
                     MOCK_COLLECTIONS.put(collection.getName(), new ArrayList<String>());
                 }
                 File[] mockNames = collection.listFiles();
@@ -53,51 +52,51 @@ public class DataProviderService {
                     String fileName = mockName.getName();
                     String mn = fileName.substring(0, fileName.lastIndexOf('.'));
                     MOCK_COLLECTIONS.get(collection.getName()).add(mn);
-                    String key = collection.getName()+MOCK_DATAS_KEY_CONNECTOR+mn;
+                    String key = collection.getName() + MOCK_DATAS_KEY_CONNECTOR + mn;
                     String mockData = this.readFile(DataSettingService.mockDataDir + File.separator + collection.getName() + File.separator + mockName.getName());
                     MockInfoDao mockInfo = new MockInfoDao();
-                    try{
-                        if(StringUtils.isNotBlank(mockData)){
+                    try {
+                        if (StringUtils.isNotBlank(mockData)) {
                             mockInfo = JSON.parseObject(mockData, MockInfoDao.class);
                         }
-                    }catch(Exception e){
+                    } catch (Exception e) {
                         //
                     }
                     MOCK_DATAS.put(key, mockInfo);
                 }
             }
-        }catch(Exception e){
-	        e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    private String readFile(String filePath){
+    private String readFile(String filePath) {
         InputStream in = null;
         ByteArrayOutputStream bos = null;
         try {
             in = new FileInputStream(filePath);
             bos = new ByteArrayOutputStream();
             int read;
-            while((read= in.read())!=-1){
+            while ((read = in.read()) != -1) {
                 bos.write(read);
                 bos.flush();
             }
             return bos.toString("UTF-8");
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            try{
-                if(in != null){
+        } finally {
+            try {
+                if (in != null) {
                     in.close();
                 }
-                if(bos != null){
+                if (bos != null) {
                     bos.close();
                 }
-            }catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         return null;
     }
-	
+
 }

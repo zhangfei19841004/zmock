@@ -3,42 +3,42 @@ package com.zf.dto.easyui;
 import java.util.List;
 
 public class Datagrid<T> {
-	/**
-	 * 数据总记录条数
-	 */
-	private Integer total;
-	
-	/**
-	 * 数据内容
-	 */
-	private List<T> rows;
+    /**
+     * 数据总记录条数
+     */
+    private Integer total;
 
-	public Datagrid(List<T> rows) {
-		super();
-		this.rows = rows;
-		this.total = rows.size();
-	}
-	
-	public Datagrid(List<T> rows, int total) {
-		super();
-		this.rows = rows;
-		this.total = total;
-	}
+    /**
+     * 数据内容
+     */
+    private List<T> rows;
 
-	public Integer getTotal() {
-		return total;
-	}
+    public Datagrid(List<T> rows) {
+        super();
+        this.rows = rows;
+        this.total = rows.size();
+    }
 
-	public List<T> getRows() {
-		return rows;
-	}
+    public Datagrid(List<T> rows, int total) {
+        super();
+        this.rows = rows;
+        this.total = total;
+    }
 
-	public void setRows(List<T> rows) {
-		this.rows = rows;
-	}
+    public Integer getTotal() {
+        return total;
+    }
 
-	public void setTotal(Integer total) {
-		this.total = total;
-	}
-	
+    public List<T> getRows() {
+        return rows;
+    }
+
+    public void setRows(List<T> rows) {
+        this.rows = rows;
+    }
+
+    public void setTotal(Integer total) {
+        this.total = total;
+    }
+
 }

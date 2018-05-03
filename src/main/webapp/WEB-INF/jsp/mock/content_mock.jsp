@@ -75,8 +75,6 @@
                     $("#requestMethod").combobox('setValues', methods.split(','));
                 }
 
-                $("#requestDecryptAndVerify").combobox('setValues', '${rules.requestDecryptAndVerify}');
-                $("#responseEncrypt").combobox('setValues', '${rules.responseEncrypt}');
             });
 
             function initialInput(){
@@ -173,7 +171,7 @@
             <form id="mockForm" name="updateForm" method="post">
 			<div data-options="region:'west'" border="false" style="width:50%;background:#f5f9fc">
 				<div class="easyui-layout" fit="true" style="margin: 0px;background:#f5f9fc">
-					<div data-options="region:'north',split:true,collapsible:false" title="mock请求信息" style="width:100%;height:50%;background:#f5f9fc">
+					<div data-options="region:'north',split:true,collapsible:false" title="mock请求信息" style="width:100%;height:50%;background:#f5f9fc;padding: 2px">
 						<table cellpadding="0" cellspacing="0" class="tab_info">
 							<tr>
 								<td class="inquire_item">mock请求URL:</td>
@@ -203,42 +201,35 @@
                                            name="requestParamTemplate" id="requestParamTemplate"/>
 								</td>
 							</tr>
-							<tr>
-								<td class="inquire_item">mock请求加密与验证方式:</td>
-								<td class="inquire_form">
-									<select class="easyui-combobox" name="requestDecryptAndVerify" style="width: 50%" id="requestDecryptAndVerify">
-										<option value="">无</option>
-										<c:forEach items="${decrypts}" var="decrypt">
-											<option value="${decrypt}">${decrypt}</option>
-										</c:forEach>
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<td class="inquire_item">mock响应加密:</td>
-								<td class="inquire_form">
-									<select class="easyui-combobox" name="responseEncrypt" style="width: 50%" id="responseEncrypt">
-										<option value="">无</option>
-										<c:forEach items="${encrypts}" var="encrypt">
-											<option value="${encrypt}">${encrypt}</option>
-										</c:forEach>
-									</select>
-								</td>
-							</tr>
 						</table>
 					</div>
-					<div data-options="region:'south',collapsible:false" title="mock说明" style="width:100%;height:50%;background:#f5f9fc;padding: 10px">
-                        <div style="color:#F00;vertical-align:top;margin-left: 10px;width: 100%">
-                            <div>mock请求参数模板说明:</div>
-                            <div>1.  .*表示请求参数为任意字符串，用于POST BODY</div>
-                            <div>2.  如username=&password=表示POST表单提交或GET请求</div>
-                            <div>3.  如{"username":"","password":""}表示POST BODY为JSON串</div>
-                        </div>
+					<div data-options="region:'south',collapsible:false" title="mock脚本及说明" style="width:100%;height:50%;background:#f5f9fc;padding: 2px">
+						<div class="easyui-tabs" id="responseTab" data-options="tabWidth:112,selected:0,plain:true,border:false"
+							 style="width: 100%;height: 100%">
+							<div title="mock说明" style="padding:5px">
+								<div style="color:#F00;vertical-align:top;margin-left: 10px;width: 100%">
+									<div>mock请求参数模板说明:</div>
+									<div>1.  .*表示请求参数为任意字符串，用于POST BODY</div>
+									<div>2.  如username=&password=表示POST表单提交或GET请求</div>
+									<div>3.  如{"username":"","password":""}表示POST BODY为JSON串</div>
+								</div>
+							</div>
+							<div title="请求脚本" style="padding:5px">
+								<input class="easyui-textbox" style="width: 100%;height: 100%" data-options="multiline:true"
+									   id="requestScript" name="requestScript" value="${rules.requestScript}">
+							</div>
+
+							<div title="响应脚本" style="padding:5px">
+								<input class="easyui-textbox" style="width: 100%;height: 100%" data-options="multiline:true"
+									   id="responseScript" name="responseScript" value="${rules.responseScript}">
+							</div>
+						</div>
+
 					</div>
 				</div>
 			</div>
 
-			<div data-options="region:'east',split:true,collapsible:false" title="mock规则定义" style="width:50%;background:#f5f9fc">
+			<div data-options="region:'east',split:true,collapsible:false" title="mock规则定义" style="width:50%;background:#f5f9fc;padding: 2px">
 				<table id="mockRuleList" class="easyui-datagrid" toolbar="#mockRuleListTool"  fit="true" fitColumns="true"
 					   data-options="singleSelect:true,nowrap:false,
 							   url:'${ctx}/zmock/rules',

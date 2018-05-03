@@ -3,119 +3,119 @@ package com.zf.dao.domain;
 import java.util.List;
 
 public class MockInfoDao {
-	
-	private Long id;
-	
-	private String requestUrl;
-	
-	private String requestMethod;
-	
-	private String requestParamTemplate;
 
-	private String requestDecryptAndVerify;
+    private Long id;
 
-	private String[] resCondition;
+    private String requestUrl;
 
-	private String[] resValue;
+    private String requestMethod;
 
-	private String responseEncrypt;
+    private String requestParamTemplate;
 
-	private List<MockConditionInfo> responseCondition;
+    private String requestScript;
 
-	public Long getId() {
-		return id;
-	}
+    private String[] resCondition;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    private String[] resValue;
 
-	public String getRequestUrl() {
-		return requestUrl;
-	}
+    private String responseScript;
 
-	public void setRequestUrl(String requestUrl) {
-		this.requestUrl = requestUrl;
-	}
+    private List<MockConditionInfo> responseCondition;
 
-	public String getRequestMethod() {
-		return requestMethod;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setRequestMethod(String requestMethod) {
-		this.requestMethod = requestMethod;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public String getRequestParamTemplate() {
-		return requestParamTemplate;
-	}
+    public String getRequestUrl() {
+        return requestUrl;
+    }
 
-	public void setRequestParamTemplate(String requestParamTemplate) {
-		this.requestParamTemplate = requestParamTemplate;
-	}
-	
-	public List<MockConditionInfo> getResponseCondition() {
-		return responseCondition;
-	}
+    public void setRequestUrl(String requestUrl) {
+        this.requestUrl = requestUrl;
+    }
 
-	public void setResponseCondition(List<MockConditionInfo> responseCondition) {
-		this.responseCondition = responseCondition;
-	}
+    public String getRequestMethod() {
+        return requestMethod;
+    }
 
-	public String[] getResCondition() {
-		return resCondition;
-	}
+    public void setRequestMethod(String requestMethod) {
+        this.requestMethod = requestMethod;
+    }
 
-	public void setResCondition(String[] resCondition) {
-		this.resCondition = resCondition;
-	}
+    public String getRequestParamTemplate() {
+        return requestParamTemplate;
+    }
 
-	public String[] getResValue() {
-		return resValue;
-	}
+    public void setRequestParamTemplate(String requestParamTemplate) {
+        this.requestParamTemplate = requestParamTemplate;
+    }
 
-	public void setResValue(String[] resValue) {
-		this.resValue = resValue;
-	}
+    public List<MockConditionInfo> getResponseCondition() {
+        return responseCondition;
+    }
 
-	public String getRequestDecryptAndVerify() {
-		return requestDecryptAndVerify;
-	}
+    public void setResponseCondition(List<MockConditionInfo> responseCondition) {
+        this.responseCondition = responseCondition;
+    }
 
-	public void setRequestDecryptAndVerify(String requestDecryptAndVerify) {
-		this.requestDecryptAndVerify = requestDecryptAndVerify;
-	}
+    public String[] getResCondition() {
+        return resCondition;
+    }
 
-	public String getResponseEncrypt() {
-		return responseEncrypt;
-	}
+    public void setResCondition(String[] resCondition) {
+        this.resCondition = resCondition;
+    }
 
-	public void setResponseEncrypt(String responseEncrypt) {
-		this.responseEncrypt = responseEncrypt;
-	}
+    public String[] getResValue() {
+        return resValue;
+    }
 
-	public static class MockConditionInfo {
-		
-		public String resCondition;
-		
-		public String resValue;
+    public void setResValue(String[] resValue) {
+        this.resValue = resValue;
+    }
 
-		public String getResCondition() {
-			return resCondition;
-		}
+    public String getRequestScript() {
+        return requestScript;
+    }
 
-		public void setResCondition(String resCondition) {
-			this.resCondition = resCondition;
-		}
+    public void setRequestScript(String requestScript) {
+        this.requestScript = requestScript;
+    }
 
-		public String getResValue() {
-			return resValue;
-		}
+    public String getResponseScript() {
+        return responseScript;
+    }
 
-		public void setResValue(String resValue) {
-			this.resValue = resValue;
-		}
-		
-	}
-	
+    public void setResponseScript(String responseScript) {
+        this.responseScript = responseScript;
+    }
+
+    public static class MockConditionInfo {
+
+        public String resCondition;
+
+        public String resValue;
+
+        public String getResCondition() {
+            return resCondition;
+        }
+
+        public void setResCondition(String resCondition) {
+            this.resCondition = resCondition;
+        }
+
+        public String getResValue() {
+            return resValue;
+        }
+
+        public void setResValue(String resValue) {
+            this.resValue = resValue;
+        }
+
+    }
+
 }

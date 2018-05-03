@@ -1,12 +1,7 @@
 package com.zf.service;
 
-import com.zf.dao.domain.MockInfoDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 @Service
 public class MockWebService {
@@ -14,11 +9,11 @@ public class MockWebService {
     @Autowired
     private FileHandler fileHandler;
 
-    public void addDataFile(String collectionName, String mockName){
+    public void addDataFile(String collectionName, String mockName) {
         fileHandler.addDataFile(collectionName, mockName);
     }
 
-    public void moveDataDirAndDelete(String collectionName, String oldCollectionName){
+    public void moveDataDirAndDelete(String collectionName, String oldCollectionName) {
         fileHandler.moveDataDirAndDelete(collectionName, oldCollectionName);
     }
 
@@ -34,7 +29,7 @@ public class MockWebService {
         fileHandler.deleteDataFile(collectionName, mockName);
     }
 
-    public void saveDataFile(String collectionName, String mockName, String content){
-        fileHandler.saveDataFile(collectionName,mockName, content);
+    public void saveDataFile(String collectionName, String mockName, String content) {
+        fileHandler.saveDataFile(collectionName, mockName, content);
     }
 }

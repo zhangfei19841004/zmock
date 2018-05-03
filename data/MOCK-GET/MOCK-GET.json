@@ -1,1 +1,22 @@
-{"id":1512973741801,"requestDecryptAndVerify":"","requestMethod":"POST,GET","requestParamTemplate":"name=&test=","requestUrl":"/test/mock3","responseCondition":[{"resCondition":"name == 'zf'","resValue":"{\"retCode\":\"201\"}"},{"resCondition":"test == 'hello'","resValue":"{\"retCode\":\"202\"}"},{"resCondition":"true","resValue":"{\"retCode\":\"201\"}"}],"responseEncrypt":""}
+{
+	"id":1525361154730,
+	"requestMethod":"POST,GET",
+	"requestParamTemplate":"name=&test=",
+	"requestScript":"testscript\r\ntset1",
+	"requestUrl":"/test/mock3",
+	"responseCondition":[
+		{
+			"resCondition":"name == 'zf'",
+			"resValue":"{\n\t\"retCode\":\"201\"\n}"
+		},
+		{
+			"resCondition":"test == 'hello'",
+			"resValue":"{\n\t\"retCode\":\"202\"\n}"
+		},
+		{
+			"resCondition":"true",
+			"resValue":"{\n\t\"retCode\":\"201\"\n}"
+		}
+	],
+	"responseScript":"testresponsescript"
+}

@@ -17,12 +17,12 @@ public class FileHandler {
     @Async
     public void addDataFile(String collectionName, String mockName) {
         try {
-            File fileCollection = new File(DataSettingService.mockDataDir+File.separator+collectionName);
-            if (!fileCollection.exists()){
+            File fileCollection = new File(DataSettingService.mockDataDir + File.separator + collectionName);
+            if (!fileCollection.exists()) {
                 fileCollection.mkdirs();
             }
-            File fileMock = new File(fileCollection.getAbsolutePath()+File.separator+mockName+".json");
-            if(!fileMock.exists()){
+            File fileMock = new File(fileCollection.getAbsolutePath() + File.separator + mockName + ".json");
+            if (!fileMock.exists()) {
                 fileMock.createNewFile();
             }
         } catch (Exception e) {
@@ -31,21 +31,21 @@ public class FileHandler {
     }
 
     @Async
-    public void moveDataDirAndDelete(String collectionName, String oldCollectionName){
+    public void moveDataDirAndDelete(String collectionName, String oldCollectionName) {
         this.moveDataDir(collectionName, oldCollectionName);
         this.deleteDir(oldCollectionName);
     }
 
     public void moveDataDir(String collectionName, String oldCollectionName) {
         try {
-            File oldFile = new File(DataSettingService.mockDataDir+File.separator+oldCollectionName);
-            File newFile = new File(DataSettingService.mockDataDir+File.separator+collectionName);
-            if (!newFile.exists()){
+            File oldFile = new File(DataSettingService.mockDataDir + File.separator + oldCollectionName);
+            File newFile = new File(DataSettingService.mockDataDir + File.separator + collectionName);
+            if (!newFile.exists()) {
                 newFile.mkdirs();
             }
             File[] ofs = oldFile.listFiles();
             for (File of : ofs) {
-                of.renameTo(new File(newFile.getAbsolutePath()+File.separator+of.getName()));
+                of.renameTo(new File(newFile.getAbsolutePath() + File.separator + of.getName()));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -55,11 +55,11 @@ public class FileHandler {
     @Async
     public void moveDataFile(String collectionName, String mockName, String oldCollectionName, String oldMockName) {
         try {
-            File oldFile = new File(DataSettingService.mockDataDir+File.separator+oldCollectionName+File.separator+oldMockName+".json");
-            File newFile = new File(DataSettingService.mockDataDir+File.separator+collectionName+File.separator+mockName+".json");
+            File oldFile = new File(DataSettingService.mockDataDir + File.separator + oldCollectionName + File.separator + oldMockName + ".json");
+            File newFile = new File(DataSettingService.mockDataDir + File.separator + collectionName + File.separator + mockName + ".json");
             oldFile.renameTo(newFile);
-            File oldDir = new File(DataSettingService.mockDataDir+File.separator+oldCollectionName);
-            if (oldDir.listFiles().length==0){
+            File oldDir = new File(DataSettingService.mockDataDir + File.separator + oldCollectionName);
+            if (oldDir.listFiles().length == 0) {
                 oldDir.delete();
             }
         } catch (Exception e) {
@@ -69,7 +69,7 @@ public class FileHandler {
 
     public void deleteDir(String collectionName) {
         try {
-            File file = new File(DataSettingService.mockDataDir+File.separator+collectionName);
+            File file = new File(DataSettingService.mockDataDir + File.separator + collectionName);
             File[] fs = file.listFiles();
             for (File f : fs) {
                 f.delete();
@@ -88,10 +88,10 @@ public class FileHandler {
     @Async
     public void deleteDataFile(String collectionName, String mockName) {
         try {
-            File file = new File(DataSettingService.mockDataDir+File.separator+collectionName+File.separator+mockName+".json");
+            File file = new File(DataSettingService.mockDataDir + File.separator + collectionName + File.separator + mockName + ".json");
             file.delete();
-            File dir = new File(DataSettingService.mockDataDir+File.separator+collectionName);
-            if (dir.listFiles().length==0){
+            File dir = new File(DataSettingService.mockDataDir + File.separator + collectionName);
+            if (dir.listFiles().length == 0) {
                 dir.delete();
             }
         } catch (Exception e) {
@@ -103,12 +103,12 @@ public class FileHandler {
     public void saveDataFile(String collectionName, String mockName, String content) {
         OutputStream out = null;
         try {
-            File fileCollection = new File(DataSettingService.mockDataDir+File.separator+collectionName);
-            if (!fileCollection.exists()){
+            File fileCollection = new File(DataSettingService.mockDataDir + File.separator + collectionName);
+            if (!fileCollection.exists()) {
                 fileCollection.mkdirs();
             }
-            File fileMock = new File(fileCollection.getAbsolutePath()+File.separator+mockName+".json");
-            if(!fileMock.exists()){
+            File fileMock = new File(fileCollection.getAbsolutePath() + File.separator + mockName + ".json");
+            if (!fileMock.exists()) {
                 fileMock.createNewFile();
             }
             out = new FileOutputStream(fileMock);
@@ -116,9 +116,9 @@ public class FileHandler {
             out.flush();
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
-                if(out!=null){
+                if (out != null) {
                     out.close();
                 }
             } catch (IOException e) {
