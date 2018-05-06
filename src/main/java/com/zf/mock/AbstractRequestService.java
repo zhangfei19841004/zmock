@@ -49,35 +49,37 @@ public abstract class AbstractRequestService implements IRequestService {
             try {
                 ZsonResult zr = ZSON.parseJson(requestInfo.toString());
                 scriptExpressions.getCtxt().set("params", zr);
-            } catch (Exception e) {
                 if (!this.checkRequest(requestInfo, mockInfo.getRequestParamTemplate())) {
                     return JSON.toJSONString(ResponseUtil.getFailedResponse("301", "请求参数不正确!"));
                 }
+            } catch (Exception e) {
+
             }
         }
         if (StringUtils.isNotBlank(mockInfo.getRequestScript())) {
             String[] scripts = mockInfo.getRequestScript().split(";");
             for (String script : scripts) {
                 try {
-                    if (StringUtils.isNotBlank(script)) {
-                        scriptExpressions.execute(script.trim());
-                        if (this.getRequestType().equals(RequestType.POSTBODY) && script.trim().matches("^params\\s*=.+")) {
-                            requestInfo = (T) scriptExpressions.getCtxt().get("params");
-                            if (!this.checkRequest(requestInfo, mockInfo.getRequestParamTemplate())) {
-                                return JSON.toJSONString(ResponseUtil.getFailedResponse("301", "请求参数不正确!"));
-                            }
-                            if (!".*".equals(mockInfo.getRequestParamTemplate())) {
-                                try {
-                                    ZsonResult zr = ZSON.parseJson(requestInfo.toString());
-                                    scriptExpressions.getCtxt().set("params", zr);
-                                } catch (Exception e) {
+                    if(StringUtils.isBlank(script)){
+                        continue;
+                    }
+                    scriptExpressions.execute(script.trim());
+                    if (this.getRequestType().equals(RequestType.POSTBODY) && script.trim().matches("^params\\s*=.+")) {
+                        requestInfo = (T) scriptExpressions.getCtxt().get("params");
+                        if (!this.checkRequest(requestInfo, mockInfo.getRequestParamTemplate())) {
+                            return JSON.toJSONString(ResponseUtil.getFailedResponse("301", "请求参数不正确!"));
+                        }
+                        if (!".*".equals(mockInfo.getRequestParamTemplate())) {
+                            try {
+                                ZsonResult zr = ZSON.parseJson(requestInfo.toString());
+                                scriptExpressions.getCtxt().set("params", zr);
+                            } catch (Exception e) {
 
-                                }
                             }
                         }
-                        if (scriptExpressions.getCtxt().get("response") != null) {
-                            return scriptExpressions.getCtxt().get("response").toString();
-                        }
+                    }
+                    if (scriptExpressions.getCtxt().get("response") != null) {
+                        return scriptExpressions.getCtxt().get("response").toString();
                     }
                 } catch (Exception e) {
                     return JSON.toJSONString(ResponseUtil.getFailedResponse("303", "请求脚本表达示不正确: " + script));

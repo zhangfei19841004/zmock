@@ -1,7 +1,7 @@
 {
-	"id":1525591439491,
+	"id":1525592878816,
 	"requestMethod":"POST",
-	"requestParamTemplate":"{\"age\":30,\"name\":\"\"}",
+	"requestParamTemplate":"{\"name\":\"\",\"age\":30}",
 	"requestScript":"if(params.getValue(\"/name\").equals(\"zf\")){\r\n    response = \"debug\"\r\n}",
 	"requestUrl":"/test/mock1",
 	"responseCondition":[
