@@ -106,6 +106,9 @@ mock请求参数模板说明:
 表达示方便扩展，如有需要，自行扩展即可。
 支持的连接符有：and		or		(),其中()的优先级最高，支持括号里套括号。
 3.  采用文件异步保存数据的方式，且数据都放在内存里，保证接口的响应速度。
+4.  zmock脚本说明
+  * zmock脚本采用jexl表达示，具体请参考:[jexl官网](http://commons.apache.org/proper/commons-jexl/)
+  * 内置对象有:headers,params,response
 
 zmock地址
 ====
