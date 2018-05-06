@@ -1,1 +1,18 @@
-{"id":1512444575665,"requestMethod":"POST","requestParamTemplate":"{\"name\":\"\",\"age\":30}","requestUrl":"/test/mock1","responseCondition":[{"resCondition":"/name==\"test\" or /age>=20","resValue":"{\"retCode\":\"300\",\"retMsg\":\"参数不正确\"}"}]}
+{
+	"id":1525591439491,
+	"requestMethod":"POST",
+	"requestParamTemplate":"{\"age\":30,\"name\":\"\"}",
+	"requestScript":"if(params.getValue(\"/name\").equals(\"zf\")){\r\n    response = \"debug\"\r\n}",
+	"requestUrl":"/test/mock1",
+	"responseCondition":[
+		{
+			"resCondition":"/name==\"test\" or /age>=20",
+			"resValue":"{\"retCode\":\"300\",\"retMsg\":\"参数不正确\"}"
+		},
+		{
+			"resCondition":"true",
+			"resValue":"{\"retCode\":\"${code}\",\"name\":\"${/name}\"}"
+		}
+	],
+	"responseScript":"code = 200;\r\nresponse = MD5Util.getStringMD5String(response);"
+}

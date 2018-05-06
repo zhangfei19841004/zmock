@@ -3,13 +3,23 @@ package com.zf.mock;
 import com.alibaba.fastjson.JSON;
 import com.zf.dao.domain.MockInfoDao;
 import com.zf.dao.domain.MockInfoDao.MockConditionInfo;
+import com.zf.mock.enums.RequestType;
 import com.zf.service.ConvertExpressionService;
 import com.zf.service.MockInfoService;
+import com.zf.service.ScriptExpressions;
+import com.zf.utils.RegExp;
 import com.zf.utils.ResponseUtil;
+import com.zf.zson.ZSON;
+import com.zf.zson.result.ZsonResult;
+import org.apache.commons.jexl2.JexlContext;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public abstract class AbstractRequestService implements IRequestService {
 
@@ -24,43 +34,142 @@ public abstract class AbstractRequestService implements IRequestService {
 
     public <T> String process(String path, HttpServletRequest request) throws Exception {
         T requestInfo = this.getRequestInfo(request);
+        ScriptExpressions scriptExpressions = new ScriptExpressions();
+        scriptExpressions.getCtxt().set("params", requestInfo);
+        scriptExpressions.getCtxt().set("headers", this.getHeadersInfo(request));
         MockInfoDao mockInfo = mockInfoService.getMockInfoDao(path, request.getMethod());
         if (mockInfo == null) {
             return JSON.toJSONString(ResponseUtil.getFailedResponse(ResponseUtil.ResponseConstants.NOMOCKINFO.getRetCode(), ResponseUtil.ResponseConstants.NOMOCKINFO.getRetMsg()));
         }
-        /*if(StringUtils.isNotBlank(mockInfo.getRequestDecryptAndVerify()) && DecryptAndVerifyFactory.getDecryptAndVerifySize()>0){
-            IDecryptAndVerify decryptAndVerify = DecryptAndVerifyFactory.getDecryptAndVerify(mockInfo.getRequestDecryptAndVerify());
-			if(decryptAndVerify==null){
-				return JSON.toJSONString(ResponseUtil.getFailedResponse("302", "请求参数验证文件失效!"));
-			}
-			if(!decryptAndVerify.verify(requestInfo, mockInfo)){
-				return JSON.toJSONString(ResponseUtil.getFailedResponse("302", "请求参数验证失败!"));
-			}
-			requestInfo = decryptAndVerify.decrypt(requestInfo, mockInfo);
-		}*/
-        if (!this.checkRequest(requestInfo, mockInfo.getRequestParamTemplate())) {
-            return JSON.toJSONString(ResponseUtil.getFailedResponse("301", "请求参数不正确!"));
+        if (!this.getRequestType().equals(RequestType.POSTBODY)) {
+            if (!this.checkRequest(requestInfo, mockInfo.getRequestParamTemplate())) {
+                return JSON.toJSONString(ResponseUtil.getFailedResponse("301", "请求参数不正确!"));
+            }
+        } else {
+            try {
+                ZsonResult zr = ZSON.parseJson(requestInfo.toString());
+                scriptExpressions.getCtxt().set("params", zr);
+            } catch (Exception e) {
+                if (!this.checkRequest(requestInfo, mockInfo.getRequestParamTemplate())) {
+                    return JSON.toJSONString(ResponseUtil.getFailedResponse("301", "请求参数不正确!"));
+                }
+            }
         }
+        if (StringUtils.isNotBlank(mockInfo.getRequestScript())) {
+            String[] scripts = mockInfo.getRequestScript().split(";");
+            for (String script : scripts) {
+                try {
+                    if (StringUtils.isNotBlank(script)) {
+                        scriptExpressions.execute(script.trim());
+                        if (this.getRequestType().equals(RequestType.POSTBODY) && script.trim().matches("^params\\s*=.+")) {
+                            requestInfo = (T) scriptExpressions.getCtxt().get("params");
+                            if (!this.checkRequest(requestInfo, mockInfo.getRequestParamTemplate())) {
+                                return JSON.toJSONString(ResponseUtil.getFailedResponse("301", "请求参数不正确!"));
+                            }
+                            if (!".*".equals(mockInfo.getRequestParamTemplate())) {
+                                try {
+                                    ZsonResult zr = ZSON.parseJson(requestInfo.toString());
+                                    scriptExpressions.getCtxt().set("params", zr);
+                                } catch (Exception e) {
+
+                                }
+                            }
+                        }
+                        if (scriptExpressions.getCtxt().get("response") != null) {
+                            return scriptExpressions.getCtxt().get("response").toString();
+                        }
+                    }
+                } catch (Exception e) {
+                    return JSON.toJSONString(ResponseUtil.getFailedResponse("303", "请求脚本表达示不正确: " + script));
+                }
+            }
+        }
+
         List<MockConditionInfo> conditions = mockInfo.getResponseCondition();
         if (conditions == null) {
             return JSON.toJSONString(ResponseUtil.getFailedResponse(ResponseUtil.ResponseConstants.NORESULT.getRetCode(), ResponseUtil.ResponseConstants.NORESULT.getRetMsg()));
         }
+        String responseValue = null;
         for (MockConditionInfo mockConditionInfo : conditions) {
             String condition = mockConditionInfo.getResCondition();
             ConvertExpressionService<T> convert = new ConvertExpressionService<T>(requestInfo, this);
             String result = convert.convertExpression(condition);
             if (Boolean.valueOf(result)) {
-				/*if(StringUtils.isNotBlank(mockInfo.getResponseEncrypt()) && EncryptFactory.getEncryptSize()>0){
-					IEncrypt encrypt = EncryptFactory.getEncrypt(mockInfo.getResponseEncrypt());
-					if(encrypt==null){
-						return JSON.toJSONString(ResponseUtil.getFailedResponse("302", "响应参数加密文件失效!"));
-					}
-					encrypt.encrypt(mockConditionInfo.getResValue(), mockInfo);
-				}*/
-                return mockConditionInfo.getResValue();
+                responseValue = mockConditionInfo.getResValue();
+                break;
             }
         }
-        return JSON.toJSONString(ResponseUtil.getFailedResponse(ResponseUtil.ResponseConstants.NORESULT.getRetCode(), ResponseUtil.ResponseConstants.NORESULT.getRetMsg()));
+        if (responseValue == null) {
+            return JSON.toJSONString(ResponseUtil.getFailedResponse(ResponseUtil.ResponseConstants.NORESULT.getRetCode(), ResponseUtil.ResponseConstants.NORESULT.getRetMsg()));
+        }
+        scriptExpressions.getCtxt().set("response", responseValue);
+        if (StringUtils.isBlank(mockInfo.getResponseScript())) {
+            return this.replaceResponse(responseValue, scriptExpressions.getCtxt());
+        }
+
+        String[] scripts = mockInfo.getResponseScript().split(";");
+        for (String script : scripts) {
+            try {
+                if (StringUtils.isNotBlank(script)) {
+                    scriptExpressions.execute(script.trim());
+                    scriptExpressions.getCtxt().set("response", this.replaceResponse(scriptExpressions.getCtxt().get("response").toString(), scriptExpressions.getCtxt()));
+                }
+            } catch (Exception e) {
+                return JSON.toJSONString(ResponseUtil.getFailedResponse("304", "响应脚本表达示不正确: " + script));
+            }
+        }
+        return scriptExpressions.getCtxt().get("response").toString();
+    }
+
+    private Map<String, String> getHeadersInfo(HttpServletRequest request) {
+        Map<String, String> map = new HashMap<>();
+        Enumeration headerNames = request.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String key = (String) headerNames.nextElement();
+            String value = request.getHeader(key);
+            map.put(key, value);
+        }
+        return map;
+    }
+
+    private String replaceResponse(String response, JexlContext ctxt) {
+        List<String> replaces = RegExp.find("(?<=\"\\$\\{)[^\\}]+(?=\\}\")", response);
+        for (String replace : replaces) {
+            Object value = ctxt.get(replace);
+            if (value == null) {
+                Object params = ctxt.get("params");
+                if (params instanceof Map) {
+                    value = ((Map) params).get(replace);
+                } else {
+                    value = ((ZsonResult) params).getValue(replace);
+                }
+            }
+            if (value == null) {
+                continue;
+            }
+            if (value instanceof String) {
+                response = response.replace("\"${" + replace + "}\"", "\"" + value.toString() + "\"");
+            } else {
+                response = response.replace("\"${" + replace + "}\"", value.toString());
+            }
+        }
+        replaces = RegExp.find("(?<=\\$\\{)[^\\}]+(?=\\})", response);
+        for (String replace : replaces) {
+            Object value = ctxt.get(replace);
+            if (value == null) {
+                Object params = ctxt.get("params");
+                if (params instanceof Map) {
+                    value = ((Map) params).get(replace);
+                } else {
+                    value = ((ZsonResult) params).getValue(replace);
+                }
+            }
+            if (value == null) {
+                continue;
+            }
+            response = response.replace("${" + replace + "}", value.toString());
+        }
+        return response;
     }
 
 }

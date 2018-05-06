@@ -1,22 +1,22 @@
 {
-	"id":1525361154730,
+	"id":1525591979146,
 	"requestMethod":"POST,GET",
 	"requestParamTemplate":"name=&test=",
-	"requestScript":"testscript\r\ntset1",
+	"requestScript":"if(headers.get(\"xx\").equals(\"ff\")){\r\n    response = \"headerdebug\"\r\n};\r\nif(params.get(\"name\").equals(\"zf\")){\r\n    response = \"debug\"\r\n}",
 	"requestUrl":"/test/mock3",
 	"responseCondition":[
 		{
 			"resCondition":"name == 'zf'",
-			"resValue":"{\n\t\"retCode\":\"201\"\n}"
+			"resValue":"{\"retCode\":\"201\"}"
 		},
 		{
 			"resCondition":"test == 'hello'",
-			"resValue":"{\n\t\"retCode\":\"202\"\n}"
+			"resValue":"{\"retCode\":\"202\"}"
 		},
 		{
 			"resCondition":"true",
-			"resValue":"{\n\t\"retCode\":\"201\"\n}"
+			"resValue":"{\"retCode\":\"201\"}"
 		}
 	],
-	"responseScript":"testresponsescript"
+	"responseScript":""
 }

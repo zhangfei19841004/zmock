@@ -286,7 +286,7 @@ public class WebController {
             condInfo.setResCondition(conds[i]);
             try {
                 Object obj = JSON.parse(resValues[i]);
-                condInfo.setResValue(JSON.toJSONString(obj, true));
+                condInfo.setResValue(JSON.toJSONString(obj));
             } catch (Exception e) {
                 condInfo.setResValue(resValues[i]);
             }
@@ -295,7 +295,7 @@ public class WebController {
         infos.setId(System.currentTimeMillis());
         try {
             Object obj = JSON.parse(infos.getRequestParamTemplate());
-            infos.setRequestParamTemplate(JSON.toJSONString(obj, true));
+            infos.setRequestParamTemplate(JSON.toJSONString(obj));
         } catch (Exception e) {
             //
         }

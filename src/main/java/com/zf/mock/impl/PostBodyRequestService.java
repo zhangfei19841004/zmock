@@ -19,6 +19,8 @@ public class PostBodyRequestService extends AbstractRequestService {
         return RequestType.POSTBODY;
     }
 
+    private ZsonResult zsonResult;
+
     @Override
     public <T> boolean checkRequest(T requestInfo, String requestParamTemplate) {
         if (".*".equals(requestParamTemplate)) {

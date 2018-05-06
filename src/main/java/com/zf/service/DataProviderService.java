@@ -17,10 +17,10 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class DataProviderService {
 
-    @PostConstruct
+    /*@PostConstruct
     public void initial() {
         this.loadMockData();
-    }
+    }*/
 
     public static ConcurrentHashMap<String, List<String>> MOCK_COLLECTIONS = new ConcurrentHashMap<>();
 
