@@ -234,7 +234,7 @@
                          data-options="tabWidth:112,selected:0,plain:true,border:false"
                          style="width: 100%;height: 100%">
                         <div title="mock说明" style="padding:5px">
-                            <div style="color:#F00;vertical-align:top;margin-left: 10px;width: 100%">
+                            <div style="color:#F00;vertical-align:top;margin-left: 10px;width: 95%">
                                 <div>mock请求参数模板说明:</div>
                                 <div>1. .*表示请求参数为任意字符串，用于POST BODY</div>
                                 <div>2. 如username=&password=表示POST表单提交或GET请求</div>
