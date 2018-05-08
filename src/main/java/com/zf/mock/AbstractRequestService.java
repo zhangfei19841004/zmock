@@ -143,7 +143,11 @@ public abstract class AbstractRequestService implements IRequestService {
                 if (params instanceof Map) {
                     value = ((Map) params).get(replace);
                 } else {
-                    value = ((ZsonResult) params).getValue(replace);
+                    try{
+                        value = ((ZsonResult) params).getValue(replace);
+                    }catch (Exception e){
+
+                    }
                 }
             }
             if (value == null) {
@@ -163,7 +167,11 @@ public abstract class AbstractRequestService implements IRequestService {
                 if (params instanceof Map) {
                     value = ((Map) params).get(replace);
                 } else {
-                    value = ((ZsonResult) params).getValue(replace);
+                    try{
+                        value = ((ZsonResult) params).getValue(replace);
+                    }catch (Exception e){
+
+                    }
                 }
             }
             if (value == null) {
