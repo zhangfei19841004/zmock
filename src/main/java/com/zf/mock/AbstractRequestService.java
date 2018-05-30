@@ -56,6 +56,7 @@ public abstract class AbstractRequestService implements IRequestService {
 
             }
         }
+        String response = null;
         if (StringUtils.isNotBlank(mockInfo.getRequestScript())) {
             String[] scripts = mockInfo.getRequestScript().split(";");
             for (String script : scripts) {
@@ -79,36 +80,39 @@ public abstract class AbstractRequestService implements IRequestService {
                         }
                     }
                     if (scriptExpressions.getCtxt().get("response") != null) {
-                        return scriptExpressions.getCtxt().get("response").toString();
+                        response = scriptExpressions.getCtxt().get("response").toString();
+                        break;
                     }
                 } catch (Exception e) {
                     return JSON.toJSONString(ResponseUtil.getFailedResponse("303", "请求脚本表达示不正确: " + script));
                 }
             }
         }
-
-        List<MockConditionInfo> conditions = mockInfo.getResponseCondition();
-        if (conditions == null) {
-            return JSON.toJSONString(ResponseUtil.getFailedResponse(ResponseUtil.ResponseConstants.NORESULT.getRetCode(), ResponseUtil.ResponseConstants.NORESULT.getRetMsg()));
-        }
-        String responseValue = null;
-        for (MockConditionInfo mockConditionInfo : conditions) {
-            String condition = mockConditionInfo.getResCondition();
-            ConvertExpressionService<T> convert = new ConvertExpressionService<T>(requestInfo, this);
-            String result = convert.convertExpression(condition);
-            if (Boolean.valueOf(result)) {
-                responseValue = mockConditionInfo.getResValue();
-                break;
+        if(response==null){
+            List<MockConditionInfo> conditions = mockInfo.getResponseCondition();
+            if (conditions == null) {
+                return JSON.toJSONString(ResponseUtil.getFailedResponse(ResponseUtil.ResponseConstants.NORESULT.getRetCode(), ResponseUtil.ResponseConstants.NORESULT.getRetMsg()));
             }
+            String responseValue = null;
+            for (MockConditionInfo mockConditionInfo : conditions) {
+                String condition = mockConditionInfo.getResCondition();
+                ConvertExpressionService<T> convert = new ConvertExpressionService<T>(requestInfo, this);
+                String result = convert.convertExpression(condition);
+                if (Boolean.valueOf(result)) {
+                    responseValue = mockConditionInfo.getResValue();
+                    break;
+                }
+            }
+            if (responseValue == null) {
+                return JSON.toJSONString(ResponseUtil.getFailedResponse(ResponseUtil.ResponseConstants.NORESULT.getRetCode(), ResponseUtil.ResponseConstants.NORESULT.getRetMsg()));
+            }
+            scriptExpressions.getCtxt().set("response", responseValue);
+        }else{
+            scriptExpressions.getCtxt().set("response", response);
         }
-        if (responseValue == null) {
-            return JSON.toJSONString(ResponseUtil.getFailedResponse(ResponseUtil.ResponseConstants.NORESULT.getRetCode(), ResponseUtil.ResponseConstants.NORESULT.getRetMsg()));
-        }
-        scriptExpressions.getCtxt().set("response", responseValue);
         if (StringUtils.isBlank(mockInfo.getResponseScript())) {
-            return this.replaceResponse(responseValue, scriptExpressions.getCtxt());
+            return this.replaceResponse(scriptExpressions.getCtxt().get("response").toString(), scriptExpressions.getCtxt());
         }
-
         String[] scripts = mockInfo.getResponseScript().split(";");
         for (String script : scripts) {
             try {
