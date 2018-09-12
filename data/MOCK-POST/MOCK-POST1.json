@@ -1,13 +1,17 @@
 {
-	"id":1525766942266,
+	"id":1536718879353,
 	"requestMethod":"POST",
-	"requestParamTemplate":"{\"age\":\"30\",\"name\":\"\"}",
-	"requestScript":"if(params.getValue(\"/name\").equals(\"zf\")){\r\n    response = \"debug\"\r\n}",
+	"requestParamTemplate":"{\"name\":{\"first\":\"zhang\",\"second\":\"fei\"},\"age\":\"30\"}",
+	"requestScript":"code=\"200\"",
 	"requestUrl":"/test/mock1",
 	"responseCondition":[
 		{
+			"resCondition":"/name=={\"first\":\"zhang\",\"second\":\"fei\"}",
+			"resValue":"{\"retCode\":\"200\",\"retMsg\":\"ok.\"}"
+		},
+		{
 			"resCondition":"true",
-			"resValue":"{\"retCode\":\"${code}\",\"name\":\"${/name}\"}"
+			"resValue":"{\"retCode\":\"${code}\",\"name\":${/name}}"
 		},
 		{
 			"resCondition":"/name==\"test\"",
