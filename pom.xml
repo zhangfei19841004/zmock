@@ -10,7 +10,7 @@
   	<packaging>war</packaging>
   
 	<properties>
-  		<java-version>1.7</java-version>
+  		<java-version>1.8</java-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<webapp-folder>src/main/webapp</webapp-folder>
 		<springframework-version>4.3.0.RELEASE</springframework-version>

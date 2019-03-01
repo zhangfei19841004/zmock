@@ -3,10 +3,8 @@ package com.zf.service;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
+import java.util.List;
 
 /**
  * Created by zhangfei on 2017/6/7/007.
@@ -101,7 +99,7 @@ public class FileHandler {
 
     @Async
     public void saveDataFile(String collectionName, String mockName, String content) {
-        OutputStream out = null;
+        BufferedWriter writer = null;
         try {
             File fileCollection = new File(DataSettingService.mockDataDir + File.separator + collectionName);
             if (!fileCollection.exists()) {
@@ -111,21 +109,20 @@ public class FileHandler {
             if (!fileMock.exists()) {
                 fileMock.createNewFile();
             }
-            out = new FileOutputStream(fileMock);
-            out.write(content.getBytes());
-            out.flush();
+            writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileMock), "UTF-8"));
+            writer.write(content);
+            writer.flush();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
-                if (out != null) {
-                    out.close();
+                if (writer != null) {
+                    writer.close();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
-
 
 }

@@ -45,7 +45,7 @@ public class DataProviderService {
                     continue;
                 }
                 if (!MOCK_COLLECTIONS.containsKey(collection.getName())) {
-                    MOCK_COLLECTIONS.put(collection.getName(), new ArrayList<String>());
+                    MOCK_COLLECTIONS.put(collection.getName(), new ArrayList<>());
                 }
                 File[] mockNames = collection.listFiles();
                 for (File mockName : mockNames) {
