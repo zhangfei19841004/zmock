@@ -173,12 +173,18 @@
 			<version>2.0</version>
 		</dependency>
 		
-		<dependency>
+		<!--<dependency>
 			<groupId>com.zf</groupId>
 			<artifactId>zson</artifactId>
 			<version>1.0</version>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/lib/zson.jar</systemPath>
+		</dependency>-->
+
+		<dependency>
+			<groupId>link.zhangfei</groupId>
+			<artifactId>zson</artifactId>
+			<version>1.0</version>
 		</dependency>
 	</dependencies>
 	
