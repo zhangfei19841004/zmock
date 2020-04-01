@@ -5,7 +5,6 @@ import com.zf.dao.domain.MockInfoDao;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -40,6 +39,9 @@ public class DataProviderService {
                 file.mkdirs();
             }
             File[] collections = file.listFiles();
+            if (collections == null) {
+                return;
+            }
             for (File collection : collections) {
                 if (collection.getName().startsWith(".")) {
                     continue;

@@ -59,11 +59,9 @@
         </dependency>-->
 
         <dependency>
-            <groupId>com.zf</groupId>
+            <groupId>link.zhangfei</groupId>
             <artifactId>zson</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/zson.jar</systemPath>
+            <version>1.1</version>
         </dependency>
 
     </dependencies>
@@ -93,13 +91,6 @@
                 <targetPath>META-INF/resources</targetPath>
                 <includes>
                     <include>**/**</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>${project.basedir}/lib</directory>
-                <targetPath>BOOT-INF/lib/</targetPath>
-                <includes>
-                    <include>**/*.jar</include>
                 </includes>
             </resource>
             <resource>
