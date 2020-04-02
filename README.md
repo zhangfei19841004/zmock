@@ -10,6 +10,13 @@ zmock应用场景
 2.  当系统中有第三方接口，在做性能测试时，可以mock第三方接口，作为性能测试的档板。
 3.  其它。
 
+zmock示例介绍
+====
+
+1.  启动zmock后，默认会加载data目录下面的数据，里面有一条示例
+2.  zmock.postman_collection.json是针对示例中在postman中的请求，导入进postman即可
+3.  示例中可以看到zmock自带的对象在请求脚本，响应脚本，在规则定义中的使用。
+
 zmock介绍
 ====
 
@@ -113,7 +120,6 @@ mock请求参数模板说明:
 zmock地址
 ====
 * github:  https://github.com/zhangfei19841004/zmock
-* 体验地址：http://101.200.48.144:8080/zmock/index
 
 作者联系方式
 ====

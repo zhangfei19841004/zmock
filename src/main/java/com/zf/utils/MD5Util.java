@@ -35,7 +35,7 @@ public class MD5Util {
      * @param str
      * @return String
      */
-    public static String getStringMD5String(String str) {
+    public static String md5(String str) {
         if (str == null) {
             return null;
         }

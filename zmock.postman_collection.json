@@ -1,0 +1,92 @@
+{
+	"info": {
+		"_postman_id": "dfa69ef5-574b-4ca3-90f9-3a1b5410de3d",
+		"name": "zmock",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "zmock",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "15019703-cbf8-48a8-9cca-c6f9558a7a5c",
+						"exec": [
+							"var p = pm.request.url.query.get(\"username\")+\"123456\"",
+							"var sign = CryptoJS.MD5(p).toString();",
+							"pm.environment.set(\"sign\", sign);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/test?username=zmock&sign={{sign}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"test"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "zmock"
+						},
+						{
+							"key": "sign",
+							"value": "{{sign}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "zmock1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "15019703-cbf8-48a8-9cca-c6f9558a7a5c",
+						"exec": [
+							"var p = pm.request.url.query.get(\"username\")+\"123456\"",
+							"var sign = CryptoJS.MD5(p).toString();",
+							"pm.environment.set(\"sign\", sign);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/test1?username=zmock",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"test1"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "zmock"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

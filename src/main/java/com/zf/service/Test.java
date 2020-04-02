@@ -26,7 +26,7 @@ public class Test {
         new JexlEngine().createExpression("d = c+20").evaluate(ctxt);
         new JexlEngine().createExpression("s = System.currentTimeMillis()").evaluate(ctxt);
         new JexlEngine().createExpression("e = b.substring(0,t)").evaluate(ctxt);
-        new JexlEngine().createExpression("f = MD5Util.getStringMD5String(b)").evaluate(ctxt);
+        new JexlEngine().createExpression("f = MD5Util.md5(b)").evaluate(ctxt);
         Expression expression = new JexlEngine().createExpression("a = 10;");
         String s = expression.dump();
         Object ro = expression.evaluate(ctxt);

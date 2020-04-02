@@ -1,0 +1,18 @@
+{
+	"id":1585797817585,
+	"requestMethod":"GET",
+	"requestParamTemplate":"username=",
+	"requestScript":"",
+	"requestUrl":"/test1",
+	"responseCondition":[
+		{
+			"resCondition":"username=='zf' or username=='zmock'",
+			"resValue":"{\"code\":200}"
+		},
+		{
+			"resCondition":"true",
+			"resValue":"{\"code\":201}"
+		}
+	],
+	"responseScript":""
+}

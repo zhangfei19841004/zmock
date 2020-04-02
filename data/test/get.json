@@ -1,0 +1,14 @@
+{
+	"id":1585796435337,
+	"requestMethod":"GET",
+	"requestParamTemplate":"username=&sign=",
+	"requestScript":"if(!params.sign.equals(MD5Util.md5(params.username+\"123456\"))){response=\"{\\\"code\\\":300}\"};\r\n",
+	"requestUrl":"/test",
+	"responseCondition":[
+		{
+			"resCondition":"true",
+			"resValue":"{\"code\":200,\"username\":${username}}"
+		}
+	],
+	"responseScript":"response=response + \" - hello ${username}\""
+}
